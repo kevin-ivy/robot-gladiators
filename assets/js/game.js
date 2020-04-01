@@ -32,6 +32,13 @@ var enemyNames = ["Pacifier", "Overlord", "Gamma"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+//create a function to generate a random number
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
+
 //Create fight function
 var fight = function(enemyName) {
 //repeat and execute as long as the player or enemy robot is alive
@@ -48,14 +55,15 @@ var fight = function(enemyName) {
             if (confirmSkip) {
                 window.alert(playerName + " has chosen to skip the fight. Goodbye!");
                 //subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             }           
         }
 
         //Perform the player's attack: subtract playerAttack from enemyHealth
-         enemyHealth = enemyHealth - playerAttack;
+         var damage = randomNumber(playerAttack - 3, playerAttack);
+         enemyHealth = Math.max(0, enemyHealth - damage);
 
         //Log a resulting message to the console
          console.log(
@@ -75,7 +83,8 @@ var fight = function(enemyName) {
         }
 
         //Perform the enemy's attack: subtract enemyAttack from playerHealth
-        playerHealth = playerHealth - enemyAttack;
+        var damage = randomNumber (enemyAttack - 3, enemyAttack);
+        playerHealth = Math.max(0, playerHealth - damage);
 
         //Log a resulting message to the console
         console.log(
@@ -106,7 +115,7 @@ var startGame = function() {
             
             //Select which robot to fight and restore their health
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40, 60);
             
             //call fight function with enemy robot
             fight(pickedEnemyName);
@@ -164,10 +173,10 @@ var shop = function() {
         case "REFILL": //new case
         case "refill":
             if (playerMoney >= 7) {
-                window.alert("Refilling player's health by 20 for 7 dollars.");
+                window.alert("Refilling player's health by 25 for 7 dollars.");
 
                 //Increase health and decrease money
-                playerHealth = playerHealth + 20;
+                playerHealth = playerHealth + 25;
                 playerMoney = playerMoney - 7;
                 break;
             }
