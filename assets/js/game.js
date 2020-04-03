@@ -168,9 +168,23 @@ var startGame = function() {
 
 //function to end the game
 var endGame = function(){
+    window.alert("The game has ended. Let's see how you did!");
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+        highScore = 0;
+    }
     //if player is still alive, player wins!
     if (playerInfo.health > 0) {
-        window.alert("Great job, you're the new champion! You now have a score of " + playerInfo.money + ".");
+        window.alert("Great job, you're the new champion! You ended with a score of " + playerInfo.money + ".");
+        //Check to see if player beat high score
+        if (playerInfo.money > highScore) {
+            localStorage.setItem("highscore", playerInfo.money);
+            localStorage.setItem("name", playerInfo.name);
+
+            alert(playerInfo.name + " now has a high score of " + playerInfo.money + "!");
+        } else {
+            alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!");
+        }
     } else {
         window.alert("You've lost your robot in battle.");
     }
@@ -234,12 +248,12 @@ var getPlayerName = function() {
 var playerInfo = {
     name: getPlayerName(),
     health: 100,
-    attack: 10,
+    attack: 12,
     money: 10,
     reset: function() {
         this.health = 100;
         this.money = 10;
-        this.attack = 10;
+        this.attack = 12;
     },
     refillHealth: function() {
         if (this.money >= 7) {
@@ -269,15 +283,15 @@ var playerInfo = {
 var enemyInfo = [
     {
         name: "Pacifier",
-        attack: randomNumber(10, 12)
+        attack: randomNumber(9, 11)
     },
     {
         name: "Overlord",
-        attack: randomNumber(12, 14)
+        attack: randomNumber(10, 12)
     },
     {
         name: "Gamma",
-        attack: randomNumber(16,18)
+        attack: randomNumber(12, 14)
     }
 ];
 
