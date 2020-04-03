@@ -181,9 +181,23 @@ var shop = function() {
     }
 };
 
+//function to set name
+
+var getPlayerName = function() {
+    var name = "";
+
+    // Add loop that prompts for name and checks if valid
+    while (name === '' || name === null){
+        name = prompt("What is your robot's name?");
+    }
+
+    console.log("Your robot's name is "  + name);
+    return name;
+};
+
 // Initialize player robot name and starting stats
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -232,3 +246,7 @@ var enemyInfo = [
 
 // start the game when the page laoads
 startGame()
+
+function newFunction() {
+    debugger;
+}
